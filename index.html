@@ -72,39 +72,79 @@
 
 						<!-- Contact -->
 						<article id="contact">
-							<h2 class="major">Contact</h2>
-							<p>Feel free to reach out to us directly through the following contact details:</p>
-							<ul>
-								<li><strong>Email:</strong> <a href="mailto:krishnaballavreal@gmail.com">Gmail</a></li>
-								<li><strong>Phone:</strong> <a href="tel:+917667670241">Phone</a></li>
-							</ul>
-							<form method="post" action="#">
-								<div class="fields">
-									<div class="field half">
-										<label for="name">Name</label>
-										<input type="text" name="name" id="name" />
-									</div>
-									<div class="field half">
-										<label for="email">Email</label>
-										<input type="text" name="email" id="email" />
-									</div>
-									<div class="field">
-										<label for="message">Message</label>
-										<textarea name="message" id="message" rows="4"></textarea>
-									</div>
-								</div>
-								<ul class="actions">
-									<li><input type="submit" value="Send Message" class="primary" /></li>
-									<li><input type="reset" value="Reset" /></li>
-								</ul>
-							</form>
-							<ul class="icons">
-								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-								<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
-							</ul>
+						    <h2 class="major">Contact</h2>
+						    <p>Feel free to reach out to us directly through the following contact details:</p>
+						    <ul>
+						        <li><strong>Email:</strong> <a href="mailto:krishnaballavreal@gmail.com">Gmail</a></li>
+						        <li><strong>Phone:</strong> <a href="tel:+917667670241">Phone</a></li>
+						    </ul>
+						    <form id="contact-form">
+						        <div class="fields">
+						            <div class="field half">
+						                <label for="name">Name</label>
+						                <input type="text" name="name" id="name" required />
+						            </div>
+						            <div class="field half">
+						                <label for="email">Email</label>
+						                <input type="email" name="email" id="email" required />
+						            </div>
+						            <div class="field">
+						                <label for="message">Message</label>
+						                <textarea name="message" id="message" rows="4" required></textarea>
+						            </div>
+						        </div>
+						        <ul class="actions">
+						            <li><button type="button" onclick="submitForm()">Send Message</button></li>
+						            <li><input type="reset" value="Reset" /></li>
+						        </ul>
+						    </form>
+						    <ul class="icons">
+						        <li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						        <li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+						        <li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+						        <li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+						    </ul>
 						</article>
+						<script>
+						    async function submitForm() {
+								const response = await fetch(scriptURL, {
+								method: 'POST',
+								mode: 'no-cors',
+								body: JSON.stringify(formData),
+								headers: {
+									'Content-Type': 'application/json',
+								},
+								});
+						        const scriptURL = 'https://script.google.com/macros/s/AKfycbwhs7wXIYTdgOS6BJl6FUMtKYiVUKBYhlXlqSqooLOexjEZIn_n-a1CHUQYf-wJgiAH/exec'; // Replace with your Web App URL
+						        const formData = {
+						            name: document.getElementById('name').value,
+						            email: document.getElementById('email').value,
+						            message: document.getElementById('message').value,
+						        };
+						
+						        try {
+						            const response = await fetch(scriptURL, {
+						                method: 'POST',
+						                body: JSON.stringify(formData),
+						                headers: {
+						                    'Content-Type': 'application/json',
+						                },
+						            });
+						
+						            const result = await response.json();
+						            if (result.status === 'success') {
+						                alert('Message sent successfully!');
+						                document.getElementById('contact-form').reset(); // Reset the form
+						            } else {
+						                alert('Something went wrong: ' + result.message);
+						            }
+						        } catch (error) {
+						            console.error('Error!', error.message);
+						            alert('There was an error. Please try again.');
+						        }
+						    }
+						</script>
+
 						
 
 						<!-- Elements -->
